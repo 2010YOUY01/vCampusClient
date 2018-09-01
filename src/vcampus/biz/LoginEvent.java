@@ -11,9 +11,12 @@ import java.util.Scanner;
 
 import vcampus.util.SocketConnection;
 import vcampus.vo.LoginFormEvent;
-
+import vcampus.vo.SocketMessage;
+import vcampus.vo.*;
 
 public class LoginEvent {
+
+	
 	public static void main(String[] args) throws IOException  {
 		LoginEvent loginEventDTO = new LoginEvent();
 		boolean loginSucceedFlag = 
@@ -42,8 +45,13 @@ public class LoginEvent {
 			Scanner socketScanner = new Scanner(client.getInputStream());
 			out = new ObjectOutputStream(client.getOutputStream());
 			
+			//message setup
+			SocketMessage socketMessage = new SocketMessage();		
+			socketMessage.setType(SocketMessage.TYPE.LOGINCHECK);
+			socketMessage.setObj(loginFormEvent);
 			
-			out.writeObject(loginFormEvent);
+			//pass the massage to the server
+			out.writeObject(socketMessage);
 			out.flush();
 			client.shutdownOutput();
 			
