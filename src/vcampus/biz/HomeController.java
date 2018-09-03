@@ -9,7 +9,6 @@ public class HomeController implements HomeListener {
 	private Home home;
 	
 	public HomeController(User user, Home home) {
-		super();
 		this.user = user;
 		this.home = home;
 	}
@@ -17,9 +16,8 @@ public class HomeController implements HomeListener {
 	
 	@Override
 	public void inHomePerfomed() {
-		home.getUsernameDisplayField().setText("hello");
-		home.getPswDisplayField().setText("Indian MI Fans");
-		System.out.println("hello indian mifans");
+		home.getTextName().setText("HELLO");
+		home.getTextCity().setText(user.getPassword());
 	}
 	
 }

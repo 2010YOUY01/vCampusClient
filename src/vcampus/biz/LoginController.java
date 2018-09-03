@@ -22,10 +22,11 @@ public class LoginController implements LoginListener {
 		boolean loginSuccessFlag = true;
 		if(loginSuccessFlag == true) {
 			//this.user = new User(event.getUsername(), event.getPassword());
-			login.getUsernameField().setText("hello£¬hello");
+			user.setUserName(login.getUsernameField().getText());
+			user.setPassword(login.getPasswordField().getText());
 			//login.closeWindow();
 			Home home = new Home(this.user);
-			HomeController homeController = new HomeController(user, home);
+			HomeController homeController = new HomeController(this.user, home);
 			home.setHomeListener(homeController);
 			home.start();
 			System.out.println("hello");

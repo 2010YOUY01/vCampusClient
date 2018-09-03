@@ -10,14 +10,16 @@ import javax.swing.border.EmptyBorder;
 import vcampus.vo.User;
 
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class Home extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField usernameDisplayField;
-	private JTextField pswDisplayField;
 	private HomeListener homeListener;
 	private User user;
+	private JTextField textName;
+	private JTextField textCity;
+	private JTextField textOccupation;
 	/**
 	 * Launch the application.
 	 */
@@ -34,17 +36,35 @@ public class Home extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		usernameDisplayField = new JTextField();
-		usernameDisplayField.setEditable(false);
-		usernameDisplayField.setBounds(68, 61, 268, 24);
-		contentPane.add(usernameDisplayField);
-		usernameDisplayField.setColumns(10);
+		JLabel label = new JLabel("\u59D3\u540D");
+		label.setBounds(12, 11, 63, 16);
+		contentPane.add(label);
 		
-		pswDisplayField = new JTextField();
-		pswDisplayField.setEditable(false);
-		pswDisplayField.setBounds(68, 135, 268, 24);
-		contentPane.add(pswDisplayField);
-		pswDisplayField.setColumns(10);
+		JLabel lblNewLabel = new JLabel("\u57CE\u5E02");
+		lblNewLabel.setBounds(12, 56, 63, 16);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("\u804C\u4E1A");
+		lblNewLabel_1.setBounds(12, 95, 63, 16);
+		contentPane.add(lblNewLabel_1);
+		
+		textName = new JTextField();
+		textName.setEnabled(false);
+		textName.setBounds(115, 8, 207, 22);
+		contentPane.add(textName);
+		textName.setColumns(10);
+		
+		textCity = new JTextField();
+		textCity.setEnabled(false);
+		textCity.setColumns(10);
+		textCity.setBounds(115, 53, 207, 22);
+		contentPane.add(textCity);
+		
+		textOccupation = new JTextField();
+		textOccupation.setEnabled(false);
+		textOccupation.setColumns(10);
+		textOccupation.setBounds(115, 92, 207, 22);
+		contentPane.add(textOccupation);
 	}
 	public JTextField getUsernameDisplayField() {
 		return usernameDisplayField;
@@ -82,6 +102,24 @@ public class Home extends JFrame {
 
 
 
+	public JTextField getTextName() {
+		return textName;
+	}
+	public void setTextName(JTextField textName) {
+		this.textName = textName;
+	}
+	public JTextField getTextCity() {
+		return textCity;
+	}
+	public void setTextCity(JTextField textCity) {
+		this.textCity = textCity;
+	}
+	public JTextField getTextOccupation() {
+		return textOccupation;
+	}
+	public void setTextOccupation(JTextField textOccupation) {
+		this.textOccupation = textOccupation;
+	}
 	private void fireInHomeEvent() {
 		if(homeListener != null) {
 			homeListener.inHomePerfomed();
@@ -92,5 +130,4 @@ public class Home extends JFrame {
 		fireInHomeEvent();
 		setVisible(true);
 	}
-
 }

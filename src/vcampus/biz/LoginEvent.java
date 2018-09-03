@@ -55,7 +55,7 @@ public class LoginEvent {
 			out.flush();
 			client.shutdownOutput();
 			
-			loginSucceedFlag = socketScanner.nextBoolean();
+			//loginSucceedFlag = socketScanner.nextBoolean();
 				
 			//close resources
 
