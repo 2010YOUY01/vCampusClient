@@ -17,7 +17,7 @@ import vcampus.vo.*;
 public class LoginEvent {
 
 	
-	public static void main(String[] args) throws IOException  {
+	public static void main(String[] args) throws IOException, ClassNotFoundException  {
 		LoginEvent loginEventDTO = new LoginEvent();
 		boolean loginSucceedFlag = 
 				loginEventDTO.authenticate(new LoginFormEvent("admin", "admin"));
@@ -31,20 +31,20 @@ public class LoginEvent {
 		
 	}
 
-	public  boolean authenticate(LoginFormEvent loginFormEvent) throws IOException 
+	public  boolean authenticate(LoginFormEvent loginFormEvent) throws IOException, ClassNotFoundException 
 	{
 		SocketConnection socketConnection = SocketConnection.getInstance();
 		socketConnection.initSocket();
 		boolean loginSucceedFlag = false;
 		Socket client = null;
 		ObjectOutputStream out = null;
+		ObjectInputStream in = null;
 		
 
 		try {
 			client = socketConnection.getSocket();
-			Scanner socketScanner = new Scanner(client.getInputStream());
+			//client = new Socket("223.3.113.76", 8508)
 			out = new ObjectOutputStream(client.getOutputStream());
-			
 			//message setup
 			SocketMessage socketMessage = new SocketMessage();		
 			socketMessage.setType(SocketMessage.TYPE.LOGINCHECK);
@@ -55,12 +55,15 @@ public class LoginEvent {
 			out.flush();
 			client.shutdownOutput();
 			
-			//loginSucceedFlag = socketScanner.nextBoolean();
-				
+			
+			in = new ObjectInputStream(client.getInputStream());
+			SocketMessage socketMessageReceived = (SocketMessage) in.readObject();
+			if((socketMessageReceived.getType() == SocketMessage.TYPE.LOGINSUCCEED)) {
+				loginSucceedFlag = true;
+			}
 			//close resources
 
 			out.close();
-			socketScanner.close();
 			client.close();
 
 			} catch (UnknownHostException e) {

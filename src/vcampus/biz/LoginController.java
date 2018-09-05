@@ -1,5 +1,7 @@
 package vcampus.biz;
 
+import java.io.IOException;
+
 import vcampus.view.Home;
 import vcampus.view.LoginView;
 import vcampus.view.LoginListener;
@@ -19,7 +21,17 @@ public class LoginController implements LoginListener {
 	@Override
 	public void LoginPerformed(LoginFormEvent event) {
 		//Authentiation check to be implemented
-		boolean loginSuccessFlag = true;
+		boolean loginSuccessFlag = false;
+		LoginEvent loginEvent = new LoginEvent();
+		try {
+			loginSuccessFlag = loginEvent.authenticate(event);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(loginSuccessFlag == true) {
 			//this.user = new User(event.getUsername(), event.getPassword());
 			user.setUserName(login.getUsernameField().getText());
