@@ -6,6 +6,7 @@ import vcampus.view.Home;
 import vcampus.view.LoginView;
 import vcampus.view.LoginListener;
 import vcampus.vo.LoginFormEvent;
+import vcampus.vo.RegisterForm;
 import vcampus.vo.User;
 
 public class LoginController implements LoginListener {
@@ -33,6 +34,7 @@ public class LoginController implements LoginListener {
 			e.printStackTrace();
 		}
 		if(loginSuccessFlag == true) {
+			login.closeWindow();
 			//this.user = new User(event.getUsername(), event.getPassword());
 			user.setUserName(login.getUsernameField().getText());
 			user.setPassword(login.getPasswordField().getText());
@@ -47,5 +49,7 @@ public class LoginController implements LoginListener {
 			
 		}
 	}
+
+	
 
 }

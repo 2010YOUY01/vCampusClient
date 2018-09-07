@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import vcampus.biz.RegisterController;
 import vcampus.vo.LoginFormEvent;
+import vcampus.vo.RegisterForm;
 import vcampus.vo.User;
 
 import javax.swing.JLabel;
@@ -15,14 +17,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class LoginView extends JFrame{
 
 	private JPanel contentPane;
 	private JTextField usernameField;
-	private JTextField passwordField;
 	private LoginListener loginListener;
 	private User user;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -41,11 +44,11 @@ public class LoginView extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblUsername = new JLabel("Username");
+		JLabel lblUsername = new JLabel("\u5B66\u53F7");
 		lblUsername.setBounds(14, 72, 72, 18);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		JLabel lblPassword = new JLabel("\u5BC6\u7801");
 		lblPassword.setBounds(14, 118, 72, 18);
 		contentPane.add(lblPassword);
 		
@@ -54,12 +57,11 @@ public class LoginView extends JFrame{
 		contentPane.add(usernameField);
 		usernameField.setColumns(10);
 		
-		JButton btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("\u767B\u9646");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
-				String password = passwordField.getText();
-				
+				String password = new String(passwordField.getPassword());
 				fireLoginEvent(new LoginFormEvent(username, password));
 				
 				//usernameField.setText("");
@@ -70,10 +72,23 @@ public class LoginView extends JFrame{
 		btnLogin.setBounds(103, 181, 113, 27);
 		contentPane.add(btnLogin);
 		
-		passwordField = new JTextField();
-		passwordField.setBounds(103, 113, 243, 24);
+		JButton button = new JButton("\u6CE8\u518C");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterView registerView = new RegisterView();
+				RegisterController registerController = 
+						new RegisterController(registerView, null);
+				registerView.setRegisterListener(registerController);
+				
+				registerView.setVisible(true);
+			}
+		});
+		button.setBounds(240, 181, 113, 27);
+		contentPane.add(button);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(100, 114, 246, 27);
 		contentPane.add(passwordField);
-		passwordField.setColumns(10);
 		
 		setVisible(true);
 	}
@@ -100,11 +115,12 @@ public class LoginView extends JFrame{
 		this.usernameField = usernameField;
 	}
 
-	public JTextField getPasswordField() {
+	
+	public JPasswordField getPasswordField() {
 		return passwordField;
 	}
 
-	public void setPasswordField(JTextField passwordField) {
+	public void setPasswordField(JPasswordField passwordField) {
 		this.passwordField = passwordField;
 	}
 
