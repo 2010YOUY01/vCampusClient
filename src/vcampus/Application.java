@@ -3,7 +3,7 @@ import javax.swing.SwingUtilities;
 
 import vcampus.biz.HomeController;
 import vcampus.biz.LoginController;
-import vcampus.view.Home;
+import vcampus.view.HomeView;
 import vcampus.view.LoginView;
 import vcampus.vo.User;
 
