@@ -21,7 +21,18 @@ public class HomeEvent {
 		PersonInfo personInfo = (PersonInfo) socketMessageReceived.getObj();
 		return personInfo;
 	}
-	
+	public boolean ifCourseSelected(int courseUID, String username) throws ClassNotFoundException {
+		boolean selectSucceedFlag = false;
+		SocketMessage socketMessage = new SocketMessage(username, SocketMessage.TYPE.CHECK_COURSE_SELECTED);
+		socketMessage.setObj(courseUID);
+		SocketMessage socketMessageReceived = MessageOperation.sendMessage(socketMessage);
+		
+		if(socketMessageReceived.getType().equals(SocketMessage.TYPE.COURSE_SELECTED)) {
+			selectSucceedFlag = true;
+		}
+
+		return selectSucceedFlag;
+	}
 	public boolean selectCourse(int courseUID, String username) throws ClassNotFoundException {
 		boolean selectSucceedFlag = false;
 		SocketMessage socketMessage = new SocketMessage(username, SocketMessage.TYPE.SELECT_COURSE);
@@ -59,7 +70,7 @@ public class HomeEvent {
 	
 	public ArrayList<Course> getAllCourseList() throws ClassNotFoundException{
 		//send name: username type: GET_COURSE_TABLE 
-		SocketMessage socketMessage = new SocketMessage(username, SocketMessage.TYPE.GET_ALL_COURSE);
+		SocketMessage socketMessage = new SocketMessage("server", SocketMessage.TYPE.GET_ALL_COURSE);
 		SocketMessage socketMessageReceived = MessageOperation.sendMessage(socketMessage);
 		ArrayList<Course> courseList = (ArrayList)socketMessageReceived.getObj();
 		return courseList;
@@ -190,6 +201,18 @@ public class HomeEvent {
 		SocketMessage socketMessageReceived = MessageOperation.sendMessage(socketMessage);
 		ArrayList<BookBorrowInfo> libraryHistory = (ArrayList<BookBorrowInfo>)socketMessageReceived.getObj();
 		return libraryHistory;
+	}
+	
+	public void logout() {
+		SocketMessage socketMessage = new SocketMessage("user", SocketMessage.TYPE.LOGOUT);
+		try {
+			System.out.println("before sending");
+			MessageOperation.sendMessage(socketMessage);
+			System.out.println("after sending");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

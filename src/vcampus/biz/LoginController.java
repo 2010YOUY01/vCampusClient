@@ -2,7 +2,10 @@ package vcampus.biz;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import vcampus.view.HomeView;
+import vcampus.view.HomeView1;
 import vcampus.view.LoginView;
 import vcampus.view.LoginListener;
 import vcampus.vo.LoginFormEvent;
@@ -35,17 +38,14 @@ public class LoginController implements LoginListener {
 		}
 		if(loginSuccessFlag == true) {
 			login.closeWindow();
-			
-			
 			HomeView homeView = new HomeView();
 			HomeController homeController = new HomeController(homeView);
+			homeController.setUsername(event.getUsername());
 			homeView.setHomeListener(homeController);
 			homeView.getHomeListener().inHomePerfomed();
-			
-
 		}
 		else {
-			
+			JOptionPane.showMessageDialog(null, "µÇÂ½Ê§°Ü", "ÌáÊ¾",JOptionPane.WARNING_MESSAGE); 
 		}
 	}
 

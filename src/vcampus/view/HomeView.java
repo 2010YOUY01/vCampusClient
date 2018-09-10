@@ -1,37 +1,70 @@
 package vcampus.view;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import java.awt.CardLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Insets;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.TextArea;
-import java.awt.FlowLayout;
+import javax.swing.table.DefaultTableModel;
+
+import com.sun.glass.events.WindowEvent;
+
+import vcampus.biz.HomeController;
+import vcampus.vo.ShoppingInfo;
+
+import java.awt.Container;
 import java.awt.List;
 import java.awt.Panel;
 import java.awt.Choice;
+import java.awt.Color;
+import javax.swing.JTable;
+import java.awt.Font;
+import javax.swing.UIManager;
+import java.awt.SystemColor;
+import java.awt.event.WindowAdapter;
 
+@SuppressWarnings("serial")
 public class HomeView extends JFrame {
-	private JPanel pane = null;
-	private JPanel p = null;
-	//private JPanel pa = null;
-	private JPanel pa1 = null;
-	private CardLayout card = null;
-	private JButton button_1=null;
-	/*private JTabbedPane jTabbedpane = new JTabbedPane();
-	private String[] tabNames = { "在线购买", "购物车","我的订单","账户余额"};
-	int i=0;
-	JPanel jpanelFirst = new JPanel();*/
 	
-	private JButton b_1=null,b_2=null,b_3=null,b_1_1=null;
-	private JButton b_3_1=null,b_3_2=null,b_3_3=null,b_3_4=null;
-	private JPanel p_1=null,p_1_1=null,p_2=null,p_3=null; 
-	private JPanel p_4=null,p_3_1=null,p_3_2=null,p_3_3=null,p_3_4=null;
+	private HomeListener homeListener;
+	
+	private JPanel pane = null;
+	private JPanel paneCard;
+	private JPanel p = null;
+	private CardLayout card = null;
+	private CardLayout cl_paneCard;
+	private JButton button_1=null;
+	private JButton btnLibrary;
+	
+	private JButton b_1=null,b_2=null,b_3=null;
+	private JButton btnStore;
+	private JButton btnCourse;
+	private JButton btnHome;
+	private JPanel p_1=null,p_2=null,p_3=null; 
+	private JPanel panelStore;
+	private JPanel panelCourse;
+	private JPanel panelWelcome;
+	private JPanel p_4=null;
+	private JPanel panelLibrary;
+	private JTextField btnSearchProduct;
+	private JTextField textLibrarySearchBox;
+	private JTable tableProductList;
+	private JTable tableBookList;
+	private JTable tableLibHistory;
+	private JTable tableCartList;
+	private JTable tableMyCourseList;
+	private JTable tableMyCourseTable;
+	private JTable tableOrderList;
+	private JTable tableAccountHistory;
+	private JTextField textChargeMoney;
 	private JTextField textUsername;
 	private JTextField textName;
 	private JTextField textAge;
@@ -39,399 +72,18 @@ public class HomeView extends JFrame {
 	private JTextField textBirthday;
 	private JTextField textCity;
 	private JTextField textSchool;
-	private JTextField textLocation;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	
-	private HomeListener homeListener;
+	private JTextField textLoc;
+	private JTable tableAllCourseList;
+
 	
 	
-	public HomeView(){
-		card = new CardLayout(5,5);
-		pane = new JPanel(card);
-		pane.setBounds(93, 24, 493, 439);//p_3_1=new JPanel(card);
-		//pa=new JPanel();
-		//pa1= new JPanel();
-		b_1_1 = new JButton("详细信息");
-		JButton b_2_1 = new JButton("选课");JButton b_2_2 = new JButton("课表查看");
-		b_3_1 = new JButton("在线购买");b_3_2 = new JButton("购物车");b_3_3 = new JButton("我的订单");b_3_4=new JButton("账户余额");
-		JButton button_1_1 = new JButton("查阅书籍");JButton button_1_2 = new JButton("借阅记录");
-		
-		b_1_1.setMargin(new Insets(2,2,2,2));b_3_1.setMargin(new Insets(2,2,2,2));
-		//pa1.setLayout(new BoxLayout(pa1, BoxLayout.X_AXIS));
-		//p.add(button_2);
-		p_1 = new JPanel();//p_1_1=new JPanel();
-		p_2 = new JPanel();	
-		p_3 = new JPanel();//p_3_1 = new JPanel();p_3_2 = new JPanel();p_3_3 = new JPanel();p_3_4=new JPanel();
-		p_4=  new JPanel();
-
-		p_1.setLayout(null);
-		JLabel label = new JLabel("学籍管理");
-		label.setBounds(214, 5, 76, 15);
-		p_1.add(label);
-		p_2.setLayout(null);
-		
-		Panel panel_2 = new Panel();
-		panel_2.setBounds(0, 41, 473, 291);
-		panel_2.setLayout(null);
-		
-		List list_1 = new List();
-		list_1.setBounds(64, 8, 348, 249);
-		panel_2.add(list_1);
-		JLabel label_9 = new JLabel("选课管理");
-		label_9.setBounds(214, 5, 105, 15);
-		p_2.add(label_9);
-		p_3.setLayout(null);
-		p = new JPanel();
-		p.setBounds(0, 0, 586, 23);
-		p_3.add(p);
-		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-		
-		JLabel label_10 = new JLabel("商店管理");
-		label_10.setBounds(214, 5, 92, 15);
-		p_3.add(label_10);
-		p_4.setLayout(null);
-		
-		Panel panel_4 = new Panel();
-		panel_4.setBounds(0, 66, 483, 251);
-		p_4.add(panel_4);
-		panel_4.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("\u67E5\u8BE2\u4E66\u7C4D");
-		lblNewLabel.setBounds(10, 31, 58, 15);
-		panel_4.add(lblNewLabel);
-		
-		textField_9 = new JTextField();
-		textField_9.setBounds(94, 28, 66, 21);
-		panel_4.add(textField_9);
-		textField_9.setColumns(10);
-		
-		JButton button_6 = new JButton("\u67E5\u8BE2\u4E66\u540D");
-		button_6.setBounds(189, 27, 97, 23);
-		panel_4.add(button_6);
-		
-		JButton button_7 = new JButton("\u67E5\u8BE2\u4F5C\u8005");
-		button_7.setBounds(296, 27, 97, 23);
-		panel_4.add(button_7);
-		
-		JButton button_8 = new JButton("\u501F\u9605\u6B64\u4E66");
-		button_8.setBounds(319, 325, 97, 23);
-		panel_4.add(button_8);
-		
-		List list_3 = new List();
-		list_3.setBounds(31, 107, 410, 187);
-		panel_4.add(list_3);
-		pane.add(p_1,"p1");
-		
-		JLabel label_1 = new JLabel("\u5B66\u53F7");
-		label_1.setBounds(10, 48, 58, 15);
-		p_1.add(label_1);
-		
-		textUsername = new JTextField();
-		textUsername.setBounds(79, 45, 111, 21);
-		p_1.add(textUsername);
-		textUsername.setColumns(10);
-		
-		JLabel label_2 = new JLabel("\u59D3\u540D");
-		label_2.setBounds(10, 111, 58, 15);
-		p_1.add(label_2);
-		
-		textName = new JTextField();
-		textName.setColumns(10);
-		textName.setBounds(79, 108, 111, 21);
-		p_1.add(textName);
-		
-		JLabel label_3 = new JLabel("\u5E74\u9F84");
-		label_3.setBounds(10, 170, 58, 15);
-		p_1.add(label_3);
-		
-		JLabel label_4 = new JLabel("\u6027\u522B");
-		label_4.setBounds(10, 229, 58, 15);
-		p_1.add(label_4);
-		
-		JLabel label_5 = new JLabel("\u51FA\u751F\u65E5\u671F");
-		label_5.setBounds(10, 292, 58, 15);
-		p_1.add(label_5);
-		
-		JLabel label_6 = new JLabel("\u7C4D\u8D2F");
-		label_6.setBounds(10, 359, 58, 15);
-		p_1.add(label_6);
-		
-		JLabel label_7 = new JLabel("\u5B66\u9662");
-		label_7.setBounds(269, 292, 58, 15);
-		p_1.add(label_7);
-		
-		JLabel label_8 = new JLabel("\u5BBF\u820D");
-		label_8.setBounds(269, 359, 58, 15);
-		p_1.add(label_8);
-		
-		textAge = new JTextField();
-		textAge.setColumns(10);
-		textAge.setBounds(79, 167, 111, 21);
-		p_1.add(textAge);
-		
-		textGender = new JTextField();
-		textGender.setColumns(10);
-		textGender.setBounds(79, 226, 111, 21);
-		p_1.add(textGender);
-		
-		textBirthday = new JTextField();
-		textBirthday.setColumns(10);
-		textBirthday.setBounds(79, 289, 111, 21);
-		p_1.add(textBirthday);
-		
-		textCity = new JTextField();
-		textCity.setColumns(10);
-		textCity.setBounds(79, 356, 111, 21);
-		p_1.add(textCity);
-		
-		textSchool = new JTextField();
-		textSchool.setColumns(10);
-		textSchool.setBounds(328, 289, 111, 21);
-		p_1.add(textSchool);
-		
-		textLocation = new JTextField();
-		textLocation.setColumns(10);
-		textLocation.setBounds(328, 356, 111, 21);
-		p_1.add(textLocation);
-		pane.add(p_2,"p2");
-		
-		JButton button = new JButton("\u9009\u62E9\u8BFE\u7A0B");
-		button.setBounds(61, 358, 97, 23);
-		p_2.add(button);
-		
-		JButton button_2 = new JButton("\u9000\u9009\u8BFE\u7A0B");
-		button_2.setBounds(305, 358, 97, 23);
-		p_2.add(button_2);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 192, 35);
-		p_2.add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 1));
-		
-		List list = new List();
-		list.setBounds(61, 52, 371, 280);
-		p_2.add(list);
-		pane.add(p_3,"p3");
-		
-		TextArea textArea_2 = new TextArea();
-		textArea_2.setBounds(60, 95, 389, 189);
-		p_3.add(textArea_2);
-		
-		JLabel label_12 = new JLabel("\u5728\u7EBF\u8D2D\u4E70");
-		label_12.setBounds(21, 43, 58, 15);
-		p_3.add(label_12);
-		
-		textField_8 = new JTextField();
-		textField_8.setBounds(100, 40, 66, 21);
-		p_3.add(textField_8);
-		textField_8.setColumns(10);
-		
-		JLabel label_13 = new JLabel("\u6309\u6807\u7B7E");
-		label_13.setBounds(265, 43, 58, 15);
-		p_3.add(label_13);
-		
-		Choice choice = new Choice();
-		choice.setBounds(360, 38, 28, 20);
-		p_3.add(choice);
-		
-		Panel panel_3 = new Panel();
-		panel_3.setBounds(0, 95, 483, 268);
-		
-		panel_3.setLayout(null);
-		
-		JButton button_4 = new JButton("\u67E5\u8BE2");
-		button_4.setBounds(187, 188, 97, 23);
-		panel_3.add(button_4);
-		
-		List list_2 = new List();
-		list_2.setBounds(59, 0, 387, 191);
-		panel_3.add(list_2);
-		
-		JButton button_5 = new JButton("\u52A0\u5165\u8D2D\u7269\u8F66");
-		button_5.setBounds(179, 389, 167, 30);
-		p_3.add(button_5);
-		pane.add(p_4,"p4");
-		JLabel label_11 = new JLabel("图书馆");
-		label_11.setBounds(220, 5, 97, 15);
-		p_4.add(label_11);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 192, 47);
-		p_4.add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(0, 66, 483, 303);
-		p_4.add(panel_5);
-		panel_5.setLayout(null);
-		
-		TextArea textArea_1 = new TextArea();
-		textArea_1.setBounds(0, 95, 473, 226);
-		panel_5.add(textArea_1);
-		
-		JButton btnNewButton = new JButton("\u8FD8\u4E66");
-		btnNewButton.setBounds(78, 396, 97, 23);
-		p_4.add(btnNewButton);
-		
-		JButton button_3 = new JButton("\u5237\u65B0");
-		button_3.setBounds(240, 396, 104, 23);
-		p_4.add(button_3);
-	/*	button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				card.next(pane);
-			}
-		});*/
-		b_3_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//card.show(pane,"p1");
-				
-			}
-		});
-		getContentPane().setLayout(null);
-		
-		this.getContentPane().add(pane);
-		//this.getContentPane().add(pa,BorderLayout.NORTH);
-		
-		//p.setPreferredSize(new Dimension(300, 150));//关键代码,设置JPanel的大小
-		
-		b_1 = new JButton("学籍管理");
-		b_1.setBounds(0, 113, 91, 71);
-		getContentPane().add(b_1);
-	
-		b_1.setMargin(new Insets(2,2,2,2));
-		
-		b_2 = new JButton("选课管理");
-		b_2.setBounds(0, 197, 91, 71);
-		getContentPane().add(b_2);
-		b_2.setMargin(new Insets(2,2,2,2));
-		
-		b_3 = new JButton("商店管理");
-		b_3.setBounds(0, 298, 91, 71);
-		getContentPane().add(b_3);
-		b_3.setMargin(new Insets(2,2,2,2));
-		
-		button_1 = new JButton("图书馆");
-		button_1.setBounds(0, 382, 91, 72);
-		getContentPane().add(button_1);
-		
-		button_1.setMargin(new Insets(2,2,2,2));
-		
-		JButton button_9 = new JButton("\u5B66\u7C4D\u7BA1\u7406");
-		button_9.setMargin(new Insets(2, 2, 2, 2));
-		button_9.setBounds(0, 26, 91, 71);
-		getContentPane().add(button_9);
-		
-	/*	TabPanel tabPanel1 = new TabPanel (); 
-		// 添加Panel到此选项卡TAB1中 
-		tabPane.addTab("TAB1", tabPanel1); 
-*/		
-		b_1.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		card.show(pane,"p1");
-		homeListener.getPersonInfo();
-	}
-});
-
-b_2.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		//pa.remove(pa);
-		card.show(pane,"p2");
-		panel.add(b_2_1);panel.add(b_2_2);
-	}
-});
-b_2_1.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		//pa.remove(pa);
-		p_2.add(panel_2);
-		panel_2.add(list);
-	}
-});
-b_2_2.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		//pa.remove(pa);
-		p_2.add(panel_2);
-		panel_2.add(list_1);
-	}
-});
-
-		b_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				card.show(pane,"p3");
-				p.add(b_3_1);p.add(b_3_2);p.add(b_3_3);p.add(b_3_4);
-			//	JTabbedPane tabPane = new JTabbedPane(JTabbedPane.TOP); 
-				//加入到窗口中 
-				//tabPane.add("Tab!",p); 
-			}
-		});
-		
-		b_3_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//p_3.add(p);
-				panel_3.add(textArea_2);
-			}
-		});
-		b_3_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				card.show(pane,"p3");
-				p.add(b_3_1);p.add(b_3_2);p.add(b_3_3);p.add(b_3_4);
-			}
-		});
-		b_3_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p_3.add(panel_3);
-				panel_3.add(list_2);
-				panel_3.add(button_4);
-			}
-		});
-		
-		
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				card.show(pane,"p4");		
-				p_4.add(panel_5);
-				panel_1.add(button_1_1);
-				panel_1.add(button_1_2);
-			}
-		});
-		
-		button_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_4.add(textField_9);
-				panel_4.add(button_6);
-				panel_4.add(button_7);
-				panel_4.add(button_8);
-				panel_4.add(list_3);
-			}
-		});
-		button_1_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_5.add(btnNewButton);
-				panel_5.add(textArea_1);
-				panel_5.add(button_3);
-			}
-		});
-
-		//this.getContentPane().add(pa,BorderLayout.NORTH);
-		
-		this.setSize(602, 501);
-		this.setVisible(true);
-	}
-	
-	public static void main(String[] args) {
-		new HomeView();
+	//pserson info
+	public JTextField getTextLibrarySearchBox() {
+		return textLibrarySearchBox;
 	}
 
-	public HomeListener getHomeListener() {
-		return homeListener;
-	}
-
-	public void setHomeListener(HomeListener homeListener) {
-		this.homeListener = homeListener;
+	public void setTextLibrarySearchBox(JTextField textLibrarySearchBox) {
+		this.textLibrarySearchBox = textLibrarySearchBox;
 	}
 
 	public JTextField getTextUsername() {
@@ -450,28 +102,12 @@ b_2_2.addActionListener(new ActionListener() {
 		this.textName = textName;
 	}
 
-	public JTextField getTextAge() {
-		return textAge;
-	}
-
-	public void setTextAge(JTextField textAge) {
-		this.textAge = textAge;
-	}
-
 	public JTextField getTextGender() {
 		return textGender;
 	}
 
 	public void setTextGender(JTextField textGender) {
 		this.textGender = textGender;
-	}
-
-	public JTextField getTextBirthday() {
-		return textBirthday;
-	}
-
-	public void setTextBirthday(JTextField textBirthday) {
-		this.textBirthday = textBirthday;
 	}
 
 	public JTextField getTextCity() {
@@ -490,27 +126,869 @@ b_2_2.addActionListener(new ActionListener() {
 		this.textSchool = textSchool;
 	}
 
-	public JTextField getTextLocation() {
-		return textLocation;
+	public JTextField getTextLoc() {
+		return textLoc;
 	}
 
-	public void setTextLocation(JTextField textLocation) {
-		this.textLocation = textLocation;
+	public void setTextLoc(JTextField textLoc) {
+		this.textLoc = textLoc;
+	}
+	
+
+	public JTextField getTextAge() {
+		return textAge;
 	}
 
-	public JTextField getTextField_8() {
-		return textField_8;
+	public void setTextAge(JTextField textAge) {
+		this.textAge = textAge;
 	}
 
-	public void setTextField_8(JTextField textField_8) {
-		this.textField_8 = textField_8;
+	public JTextField getTextBirthday() {
+		return textBirthday;
 	}
 
-	public JTextField getTextField_9() {
-		return textField_9;
+	public void setTextBirthday(JTextField textBirthday) {
+		this.textBirthday = textBirthday;
 	}
 
-	public void setTextField_9(JTextField textField_9) {
-		this.textField_9 = textField_9;
+	public HomeListener getHomeListener() {
+		return homeListener;
+	}
+
+	public void setHomeListener(HomeListener homeListener) {
+		this.homeListener = homeListener;
+	}
+	
+	//course
+	public JTable getTableAllCourseList() {
+		return tableAllCourseList;
+	}
+
+	public void setTableAllCourseList(JTable tableAllCourseList) {
+		this.tableAllCourseList = tableAllCourseList;
+	}
+	public DefaultTableModel tableModel;
+	
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
+	
+	
+
+	public JTable getTableMyCourseList() {
+		return tableMyCourseList;
+	}
+
+	public void setTableMyCourseList(JTable tableMyCourseList) {
+		this.tableMyCourseList = tableMyCourseList;
+	}
+
+	public JTable getTableMyCourseTable() {
+		return tableMyCourseTable;
+	}
+
+	public void setTableMyCourseTable(JTable tableMyCourseTable) {
+		this.tableMyCourseTable = tableMyCourseTable;
+	}
+	//显示个人课表
+	DefaultTableModel tableModel20;
+	DefaultTableModel tableModel21;
+	
+	public DefaultTableModel getTableModel20() {
+		return tableModel20;
+	}
+
+	public void setTableModel20(DefaultTableModel tableModel20) {
+		this.tableModel20 = tableModel20;
+	}
+
+	public DefaultTableModel getTableModel21() {
+		return tableModel21;
+	}
+
+	public void setTableModel21(DefaultTableModel tableModel21) {
+		this.tableModel21 = tableModel21;
+	}
+	//library
+	DefaultTableModel tableModel300;
+	
+	public DefaultTableModel getTableModel300() {
+		return tableModel300;
+	}
+
+	public void setTableModel300(DefaultTableModel tableModel300) {
+		this.tableModel300 = tableModel300;
+	}
+	
+	DefaultTableModel tableModel40;
+	
+
+	public DefaultTableModel getTableModel40() {
+		return tableModel40;
+	}
+
+	public void setTableModel40(DefaultTableModel tableModel40) {
+		this.tableModel40 = tableModel40;
+	}
+	//shop
+	DefaultTableModel tableModel11;
+	
+	
+	public DefaultTableModel getTableModel11() {
+		return tableModel11;
+	}
+
+	public void setTableModel11(DefaultTableModel tableModel11) {
+		this.tableModel11 = tableModel11;
+	}
+	
+	DefaultTableModel tableModel201;
+	
+	public DefaultTableModel getTableModel201() {
+		return tableModel201;
+	}
+
+	public void setTableModel201(DefaultTableModel tableModel201) {
+		this.tableModel201 = tableModel201;
+	}
+	
+	//超市订单
+	DefaultTableModel tableModel3;
+	private JLabel labelMoney;
+
+	public DefaultTableModel getTableModel3() {
+		return tableModel3;
+	}
+
+	public void setTableModel3(DefaultTableModel tableModel3) {
+		this.tableModel3 = tableModel3;
+	}
+	//账户
+	DefaultTableModel tableModel4;
+	
+	
+	public DefaultTableModel getTableModel4() {
+		return tableModel4;
+	}
+
+	public void setTableModel4(DefaultTableModel tableModel4) {
+		this.tableModel4 = tableModel4;
+	}
+
+	public HomeView(){
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				
+				
+				homeListener.logout();
+				
+				System.exit(0);		
+			}
+		});
+		
+		getContentPane().setBackground(UIManager.getColor("Button.background"));
+		
+		//getContentPane().setForeground(Color.BLUE);
+		
+		Panel panel_2 = new Panel();
+		panel_2.setBounds(0, 41, 473, 291);
+		panel_2.setLayout(null);
+		
+		List list_1 = new List();
+		list_1.setBounds(64, 8, 348, 249);
+		panel_2.add(list_1);
+		
+		Panel panel_3 = new Panel();
+		panel_3.setBounds(0, 95, 483, 268);
+		
+		panel_3.setLayout(null);
+		
+		JButton button_4 = new JButton("\u67E5\u8BE2");
+		button_4.setBounds(187, 188, 97, 23);
+		panel_3.add(button_4);
+		
+		List list_2 = new List();
+		list_2.setBounds(59, 0, 387, 191);
+		panel_3.add(list_2);
+		getContentPane().setLayout(null);
+		
+		JTabbedPane panelMain = new JTabbedPane(JTabbedPane.TOP); //tabbedPane_4.setForeground(new Color(0,57,179));
+		panelMain.setBounds(194, -25, 592, 578);
+		getContentPane().add(panelMain);
+		cl_paneCard = new CardLayout(5,5);
+		paneCard = new JPanel(cl_paneCard);
+		panelMain.addTab("欢迎来到Home界面！", null, paneCard, null);
+		panelWelcome = new JPanel();
+		panelWelcome.setBackground(new Color(30, 144, 255));
+		panelCourse = new JPanel();	
+		panelCourse.setBackground(new Color(30, 144, 255));
+		panelStore = new JPanel();
+		panelStore.setBackground(new Color(30, 144, 255));
+		panelLibrary=  new JPanel();
+		panelLibrary.setBackground(new Color(30, 144, 255));
+		
+				panelWelcome.setLayout(null);
+				
+				JTabbedPane panelWelcomeTab = new JTabbedPane(JTabbedPane.TOP);
+				panelWelcomeTab.setBounds(0, 23, 521, 487);
+				panelWelcome.add(panelWelcomeTab);
+				
+				JPanel panelWelcomeIn = new JPanel();  //panel_1.setForeground(new Color(0,57,179));
+				panelWelcomeTab.addTab("WEILCOME TO THE HOME!", null, panelWelcomeIn, null);
+				panelWelcomeIn.setLayout(null);
+				panelCourse.setLayout(null);
+				JLabel lblCourseManagement = new JLabel("COURSE MANAGEMENT");
+				lblCourseManagement.setBounds(214, 5, 170, 15);
+				panelCourse.add(lblCourseManagement);
+				panelStore.setLayout(null);
+				panelLibrary.setLayout(null);
+				paneCard.add(panelWelcome,"p1");
+				paneCard.add(panelCourse,"p2");
+				
+				JTabbedPane tabPanelCourse = new JTabbedPane(JTabbedPane.TOP);
+				tabPanelCourse.setBounds(0, 30, 521, 480);
+				panelCourse.add(tabPanelCourse);
+				 
+				JPanel panelSelectCourse = new JPanel();
+				tabPanelCourse.addTab("选课系统", null, panelSelectCourse, null);
+				panelSelectCourse.setLayout(null);
+				
+				JButton btnDropCourse = new JButton("\u9000\u9009\u8BFE\u7A0B");
+				btnDropCourse.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("in drop course");
+						int row = tableAllCourseList.getSelectedRow();
+						String uid = tableAllCourseList.getValueAt(row, 0).toString();
+						int courseUID = Integer.parseInt(uid);
+						homeListener.dropCourse(courseUID);
+						homeListener.getCourseList();
+					}
+				});
+				btnDropCourse.setBounds(334, 322, 106, 23);
+				panelSelectCourse.add(btnDropCourse);
+				
+				JButton btnSelectCourse = new JButton("\u9009\u62E9\u8BFE\u7A0B");
+				btnSelectCourse.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						//System.out.println("in select course");
+						int row = tableAllCourseList.getSelectedRow();
+						String uid = tableAllCourseList.getValueAt(row, 0).toString();
+						int courseUID = Integer.parseInt(uid);
+						homeListener.selectCourse(courseUID);
+						homeListener.getCourseList();
+					}
+				});
+				btnSelectCourse.setBounds(71, 322, 106, 23);
+				panelSelectCourse.add(btnSelectCourse);
+				
+				//选课系统
+				Object[][] cellData = {{"row1-col1", "row1-col2"},{"row2-col1", "row2-col2"}};
+				String[] columnNames = {"col1", "col2"};
+				JTable table = new JTable(cellData, columnNames);
+				tableAllCourseList = new JTable();
+				tableAllCourseList.setBounds(10, 34, 493, 246);
+				panelSelectCourse.add(tableAllCourseList);
+				tableModel = (DefaultTableModel) tableAllCourseList.getModel();
+				//因为只有DefaultTableModel有addColumn的功能，而table.getModel()返回的是一个TableModel类型的对象
+				//查看API，DefaultTableModel实现了TableModel的接口，为了调用DefaultTableModel的方法，必须强制类型转换
+				tableModel.addColumn("1");
+				tableModel.addColumn("2");
+				tableModel.addColumn("3");
+				tableModel.addColumn("4");
+				tableModel.addColumn("5");
+				tableModel.addColumn("6");
+				Object[] o={"课程ID","课程名称","授课老师","上课地点","上课时间","课程状态"};
+				tableModel.addRow(o);
+				Object[] c={"1","高等数学","朱平","教6 101","周二34","已选"};
+				tableModel.addRow(c);
+				
+				JPanel panelCourseTable = new JPanel();
+				tabPanelCourse.addTab("课表查看", null, panelCourseTable, null);
+				panelCourseTable.setLayout(null);
+				
+				JButton btnSeeCourseTable = new JButton("\u70B9\u51FB\u67E5\u770B");
+				btnSeeCourseTable.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//课表 List形式
+						homeListener.searchCourse();
+					}
+				});
+				btnSeeCourseTable.setBounds(10, 224, 97, 69);
+				panelCourseTable.add(btnSeeCourseTable);
+				
+				//课表查询
+				tableMyCourseList = new JTable();
+				tableMyCourseList.setBounds(117, 224, 377, 122);
+				panelCourseTable.add(tableMyCourseList);
+				tableModel20 = (DefaultTableModel) tableMyCourseList.getModel();
+				tableModel20.addColumn("1");
+				tableModel20.addColumn("2");
+				tableModel20.addColumn("3");
+				tableModel20.addColumn("3");
+				Object[] g={"课程","教师","地点","学分"};
+				tableModel20.addRow(g);
+				
+				tableMyCourseTable = new JTable();
+				tableMyCourseTable.setBounds(10, 32, 496, 168);
+				panelCourseTable.add(tableMyCourseTable);
+			    tableModel21 = (DefaultTableModel) tableMyCourseTable.getModel();
+				tableModel21.addColumn("1");
+				tableModel21.addColumn("2");
+				tableModel21.addColumn("3");
+				tableModel21.addColumn("3");
+				tableModel21.addColumn("3");
+				tableModel21.addColumn("3");
+				tableModel21.addColumn("3");
+				tableModel21.addColumn("3");
+				Object[] h={"时间","周一","周二","周三","周四","周五","周六","周日"};
+				tableModel21.addRow(h);
+				Object[] a1={"上午12","计算机组成原理","数据结构","","","","",""};
+				tableModel21.addRow(a1);
+				Object[] a2={"上午34","高等数学","","","","","高等数学",""};
+				tableModel21.addRow(a2);
+				Object[] a3={"下午12","数据结构","","","大学英语3","","","几何代数"};
+				tableModel21.addRow(a3);
+				Object[] a4={"下午34","大学语文","","软件实践","","","",""};
+				tableModel21.addRow(a4);
+				Object[] a5={"晚上12","","","","大学物理","","",""};
+				tableModel21.addRow(a5);
+				
+				JTable table_2 = new JTable(cellData, columnNames);
+				table_2 = new JTable();
+				table_2.setBounds(122, 32, 336, 184);
+				paneCard.add(panelStore,"p3");
+				DefaultTableModel tableModel5 = (DefaultTableModel) table_2.getModel();
+				tableModel5.addColumn("1");
+				tableModel5.addColumn("2");
+				tableModel5.addColumn("3");
+				tableModel5.addColumn("4");
+				tableModel5.addColumn("5");
+				tableModel5.addColumn("6");
+				tableModel5.addColumn("7");
+				tableModel5.addColumn("7");
+				Object[] a={"时间","周一","周二","周三","周四","周五","周六","周日"};
+				tableModel5.addRow(a);
+				
+				
+				
+				JTabbedPane tabPanelStore = new JTabbedPane(JTabbedPane.TOP);
+				tabPanelStore.setBounds(0, 28, 521, 482);
+				panelStore.add(tabPanelStore);
+				
+				JPanel panelBuy = new JPanel();
+				tabPanelStore.addTab("在线购买", null, panelBuy, null);
+				panelBuy.setLayout(null);
+				
+				btnSearchProduct = new JTextField();
+				btnSearchProduct.setBounds(99, 23, 66, 21);
+				panelBuy.add(btnSearchProduct);
+				btnSearchProduct.setColumns(10);
+				
+				JButton button_5 = new JButton("\u52A0\u5165\u8D2D\u7269\u8F66");
+				button_5.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int[] row = tableProductList.getSelectedRows();
+						for(int i=0; i<row.length; i++) {
+							String uid = tableProductList.getValueAt(row[i], 0).toString();
+							String productName = tableProductList.getValueAt(row[i], 1).toString();
+							String productPrice = tableProductList.getValueAt(row[i], 2).toString();
+							String productLabel = tableProductList.getValueAt(row[i], 3).toString();
+							int productUID = Integer.parseInt(uid);
+							homeListener.addToCart(productUID,productName, productPrice, productLabel);
+						}		
+						homeListener.displayCart();
+					}
+				});
+				button_5.setBounds(99, 293, 253, 30);
+				panelBuy.add(button_5);
+				
+				JLabel label_12 = new JLabel("\u5546\u54C1\u540D");
+				label_12.setBounds(34, 27, 58, 15);
+				panelBuy.add(label_12);
+				
+				//在线购买
+				tableProductList = new JTable();
+				
+				tableProductList.setBounds(10, 92, 485, 168);
+				panelBuy.add(tableProductList);
+				
+				JButton btnAddToCart = new JButton("\u641C\u7D22\u5546\u54C1");
+				btnAddToCart.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String productName = btnSearchProduct.getText();
+						homeListener.searchProduct(productName);
+					}
+				});
+				btnAddToCart.setBounds(193, 23, 97, 23);
+				panelBuy.add(btnAddToCart);
+				tableModel11 = (DefaultTableModel) tableProductList.getModel();
+				tableModel11.addColumn("1");
+				tableModel11.addColumn("2");
+				tableModel11.addColumn("3");
+				tableModel11.addColumn("4");
+				Object[] b={"商品编号", "名称","价格","类别"};
+				tableModel11.addRow(b);
+				Object[] b1={"1", "康师傅酸辣牛肉面","3.5","吃"};
+				tableModel11.addRow(b1);
+				
+				JPanel panelShoppingCar = new JPanel();
+				tabPanelStore.addTab("购物车", null, panelShoppingCar, null);
+				panelShoppingCar.setLayout(null);
+				
+				JButton buttonResetCart = new JButton("\u6E05\u7A7A\u8D2D\u7269\u8F66");
+				buttonResetCart.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						homeListener.emptyCart();
+						homeListener.displayCart();
+					}
+				});
+				buttonResetCart.setBounds(46, 308, 141, 23);
+				panelShoppingCar.add(buttonResetCart);
+				
+				JButton btnDeleteCart = new JButton("\u5220\u9664");
+				btnDeleteCart.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int[] row = tableCartList.getSelectedRows();
+						for(int i=0; i<row.length; i++) {
+							String uid = tableCartList.getValueAt(row[i], 0).toString();
+							int productUID = Integer.parseInt(uid);
+							homeListener.deleteCartItem(productUID);
+						}		
+						homeListener.displayCart();
+					}
+				});
+				btnDeleteCart.setBounds(335, 28, 97, 23);
+				panelShoppingCar.add(btnDeleteCart);
+				
+				JButton btnPay = new JButton("\u652F\u4ED8");
+				btnPay.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int[] row = tableCartList.getSelectedRows();
+						for(int i=0; i<row.length; i++) {
+							String uid = tableCartList.getValueAt(row[i], 0).toString();
+							int productUID = Integer.parseInt(uid);
+							homeListener.buyCartItem(productUID);
+						}		
+						homeListener.displayCart();
+					}
+				});
+				btnPay.setBounds(335, 308, 97, 23);
+				panelShoppingCar.add(btnPay);
+				
+				//购物车
+				tableCartList = new JTable();
+				tableCartList.setBounds(10, 61, 448, 222);
+				panelShoppingCar.add(tableCartList);
+				tableModel201= (DefaultTableModel) tableCartList.getModel();
+				tableModel201.addColumn("1");
+				tableModel201.addColumn("2");
+				tableModel201.addColumn("3");
+				tableModel201.addColumn("4");
+				Object[] i={"商品ID", "名称","价格","类别"};
+				tableModel201.addRow(i);
+				Object[] i1={"1", "薯片","3.3","食"};
+				tableModel201.addRow(i1);
+				
+				JPanel panelShoppingHistory = new JPanel();
+				tabPanelStore.addTab("我的订单", null, panelShoppingHistory, null);
+				panelShoppingHistory.setLayout(null);
+				
+				JButton btnSearchOrderHistory = new JButton("\u67E5\u8BE2");
+				btnSearchOrderHistory.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						homeListener.orderHistory();
+					}
+				});
+				btnSearchOrderHistory.setBounds(40, 40, 97, 23);
+				panelShoppingHistory.add(btnSearchOrderHistory);
+				
+				//我的订单
+				tableOrderList = new JTable();
+				tableOrderList.setBounds(27, 84, 418, 265);
+				panelShoppingHistory.add(tableOrderList);
+				tableModel3= (DefaultTableModel) tableOrderList.getModel();
+				tableModel3.addColumn("1");
+				tableModel3.addColumn("2");
+				tableModel3.addColumn("3");
+				Object[] j={"商品名","价格","购买日期"};
+				tableModel3.addRow(j);
+				Object[] j1={"怡宝矿泉水","1.5","2018.9.9.19:06"};
+				tableModel3.addRow(j1);
+				
+				JPanel panelAccount = new JPanel();
+				tabPanelStore.addTab("账户管理", null, panelAccount, null);
+				panelAccount.setLayout(null);
+				
+				JLabel label_14 = new JLabel("\u6D88\u8D39\u8BB0\u5F55");
+				label_14.setBounds(29, 44, 97, 15);
+				panelAccount.add(label_14);
+				
+				JButton buttonChargeMoney = new JButton("\u5145\u503C");
+				buttonChargeMoney.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String moneyString = textChargeMoney.getText();
+						homeListener.chargeAccount(Double.parseDouble(moneyString));
+					}
+				});
+				buttonChargeMoney.setBounds(215, 339, 97, 23);
+				panelAccount.add(buttonChargeMoney);
+				
+				//账户余额
+				tableAccountHistory = new JTable();
+				tableAccountHistory.setBounds(27, 73, 405, 223);
+				panelAccount.add(tableAccountHistory);
+				
+				textChargeMoney = new JTextField();
+				textChargeMoney.setBounds(86, 340, 66, 21);
+				panelAccount.add(textChargeMoney);
+				textChargeMoney.setColumns(10);
+				
+				JLabel lblNewLabel_1 = new JLabel("\u4F59\u989D");
+				lblNewLabel_1.setBounds(301, 44, 58, 15);
+				panelAccount.add(lblNewLabel_1);
+				
+				labelMoney = new JLabel("14.50 ");
+				labelMoney.setBounds(374, 44, 58, 15);
+				panelAccount.add(labelMoney);
+				
+				JButton button = new JButton("\u67E5\u8BE2");
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						homeListener.checkAccount();
+					}
+				});
+				button.setBounds(29, 4, 113, 27);
+				panelAccount.add(button);
+				tableModel4= (DefaultTableModel) tableAccountHistory.getModel();
+				tableModel4.addColumn("1");
+				tableModel4.addColumn("2");
+				tableModel4.addColumn("3");
+				Object[] k={"消费日期","消费金额/元","账户余额/元"};
+				tableModel4.addRow(k);
+				Object[] k1={"2018.9.1","200","20"};
+				tableModel4.addRow(k1);
+				
+				
+				paneCard.add(panelLibrary,"p4");
+				JLabel lblLibrary = new JLabel("LIBRARY");
+				lblLibrary.setBounds(220, 5, 204, 15);
+				panelLibrary.add(lblLibrary);
+				
+				JTabbedPane tabPanelLibrary = new JTabbedPane(JTabbedPane.TOP);
+				tabPanelLibrary.setBounds(0, 30, 521, 480);
+				panelLibrary.add(tabPanelLibrary);
+				
+				JPanel panelLibSearch = new JPanel();
+				tabPanelLibrary.addTab("查询书籍", null, panelLibSearch, null);
+				panelLibSearch.setLayout(null);
+				
+				JButton btnSearchAuthor = new JButton("\u67E5\u8BE2\u4F5C\u8005");
+				btnSearchAuthor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String name = textLibrarySearchBox.getText();
+						homeListener.searchBookAuthor(name);
+					}
+				});
+				btnSearchAuthor.setBounds(282, 18, 97, 23);
+				panelLibSearch.add(btnSearchAuthor);
+				
+				JButton btnSearchBookname = new JButton("\u67E5\u8BE2\u4E66\u540D");
+				btnSearchBookname.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String name = textLibrarySearchBox.getText();
+						homeListener.searchBookname(name);
+					}
+				});
+				btnSearchBookname.setBounds(282, 51, 97, 23);
+				panelLibSearch.add(btnSearchBookname);
+				
+				textLibrarySearchBox = new JTextField();
+				textLibrarySearchBox.setBounds(112, 52, 66, 21);
+				panelLibSearch.add(textLibrarySearchBox);
+				textLibrarySearchBox.setColumns(10);
+				
+				JLabel lblNewLabel = new JLabel("\u67E5\u8BE2\u4E66\u7C4D");
+				lblNewLabel.setBounds(22, 55, 58, 15);
+				panelLibSearch.add(lblNewLabel);
+				
+				JButton btnBorrow = new JButton("\u501F\u9605\u6B64\u4E66");
+				btnBorrow.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int row = tableBookList.getSelectedRow();
+						String uid = tableBookList.getValueAt(row, 0).toString();
+						int bookUID = Integer.parseInt(uid);
+						homeListener.borrowBook(bookUID);
+					}
+				});
+				btnBorrow.setBounds(282, 84, 97, 23);
+				panelLibSearch.add(btnBorrow);
+				
+				//查询书籍
+				tableBookList = new JTable();
+				tableBookList.setBounds(10, 125, 496, 245);
+				panelLibSearch.add(tableBookList);
+				tableModel300 = (DefaultTableModel) tableBookList.getModel();
+				tableModel300.addColumn("1");
+				tableModel300.addColumn("2");
+				tableModel300.addColumn("3");
+				tableModel300.addColumn("4");
+				Object[] e={"ISBN","书籍名称","书籍作者","书籍出版商"};
+				tableModel300.addRow(e);
+				Object[] l={"233","三国演义","罗贯中","凤凰出版社"};
+				tableModel300.addRow(l);
+				Object[] l1={"322","追风筝的人","bala","凤凰出版社"};
+				tableModel300.addRow(l1);
+				Object[] l2={"323","白夜行","东野圭吾","人民出版社"};
+				tableModel300.addRow(l2);
+				Object[] l3={"121","计算机组成原理","任国林","人民教育出版社"};
+				tableModel300.addRow(l3);
+				
+				
+				JPanel panelLibHistory = new JPanel();
+				tabPanelLibrary.addTab("借阅记录", null, panelLibHistory, null);
+				panelLibHistory.setLayout(null);
+				
+				JButton btnSearchLibHistory = new JButton("\u67E5\u8BE2\u8BB0\u5F55");
+				btnSearchLibHistory.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						homeListener.searchHistory();
+					}
+				});
+				btnSearchLibHistory.setBounds(287, 351, 104, 23);
+				panelLibHistory.add(btnSearchLibHistory);
+				
+				JButton btnReturnBook = new JButton("\u8FD8\u4E66");
+				btnReturnBook.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int row = tableLibHistory.getSelectedRow();
+						if(row != -1) {
+							String uid = tableLibHistory.getValueAt(row, 0).toString();
+							int bookUID = Integer.parseInt(uid);
+							homeListener.returnBook(bookUID);
+							homeListener.searchHistory();
+						}	
+					}
+				});
+				btnReturnBook.setBounds(90, 351, 97, 23);
+				panelLibHistory.add(btnReturnBook);
+				
+				//借阅记录
+				tableLibHistory = new JTable();
+				tableLibHistory.setBounds(10, 66, 496, 253);
+				panelLibHistory.add(tableLibHistory);
+				
+				JPanel panelInfo = new JPanel();
+				panelInfo.setOpaque(false);
+				paneCard.add(panelInfo, "name_124769338576444");
+				paneCard.add(panelInfo,"p5");
+				panelInfo.setLayout(null);
+				tableModel40 = (DefaultTableModel) tableLibHistory.getModel();
+				tableModel40.addColumn("1");
+				tableModel40.addColumn("2");
+				tableModel40.addColumn("3");
+				tableModel40.addColumn("4");
+				Object[] f={"书籍uid", "书籍名称","借书时间","还书时间"};
+				tableModel40.addRow(f);
+				Object[] f1={"0","三国演义","2018.9.3.19:01","2018.9.3.19:01"};
+				tableModel40.addRow(f1);
+				
+		
+		btnHome = new JButton("Click Come into home");
+		btnHome.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 12));
+		btnHome.setIcon(new ImageIcon(HomeView.class.getResource("/\u7D20\u6750/user.png")));
+		btnHome.setBounds(0, 0, 197, 71);
+		getContentPane().add(btnHome);
+	
+		btnHome.setMargin(new Insets(2,2,2,2));
+		
+		btnCourse = new JButton("Curriculum");
+		btnCourse.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 12));
+		btnCourse.setIcon(new ImageIcon(HomeView.class.getResource("/\u7D20\u6750/class (1).png")));
+		btnCourse.setBounds(0, 209, 197, 71);
+		getContentPane().add(btnCourse);
+		btnCourse.setMargin(new Insets(2,2,2,2));
+		
+		btnStore = new JButton("Store");
+		btnStore.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 12));
+		btnStore.setIcon(new ImageIcon(HomeView.class.getResource("/\u7D20\u6750/store (1).png")));
+		btnStore.setBounds(0, 326, 197, 71);
+		getContentPane().add(btnStore);
+		btnStore.setMargin(new Insets(2,2,2,2));
+		
+		btnLibrary = new JButton("Library");
+		btnLibrary.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 12));
+		btnLibrary.setIcon(new ImageIcon(HomeView.class.getResource("/\u7D20\u6750/Book (2).png")));
+		btnLibrary.setBounds(0, 439, 197, 72);
+		getContentPane().add(btnLibrary);
+		btnLibrary.setMargin(new Insets(2,2,2,2));
+
+	    JButton btnInfo = new JButton("Status Information");
+	    btnInfo.setIcon(new ImageIcon(HomeView.class.getResource("/\u7D20\u6750/Student.png")));
+	    btnInfo.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		homeListener.getPersonInfo();
+	    		cl_paneCard.show(paneCard,"p5");
+	    	}
+	    });
+	    btnInfo.setMargin(new Insets(2, 2, 2, 2));
+	    btnInfo.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 12));
+	    btnInfo.setBounds(0, 98, 197, 71);
+	    getContentPane().add(btnInfo);
+	    
+		btnHome.addActionListener(new ActionListener() {//学籍管理
+	public void actionPerformed(ActionEvent e) {
+		cl_paneCard.show(paneCard,"p1");
+	}
+});
+
+btnCourse.addActionListener(new ActionListener() {//选课管理
+	public void actionPerformed(ActionEvent e) {
+		homeListener.getCourseList();
+		cl_paneCard.show(paneCard,"p2");
+	}
+});
+
+
+		btnStore.addActionListener(new ActionListener() {//商店
+			public void actionPerformed(ActionEvent e) {
+				homeListener.showAllProducts();
+				cl_paneCard.show(paneCard,"p3");
+			}
+		});
+		
+		btnLibrary.addActionListener(new ActionListener() {//图书馆
+			public void actionPerformed(ActionEvent arg0) {
+				cl_paneCard.show(paneCard,"p4");		
+
+			}
+		});
+		this.setSize(800,600);
+		this.setVisible(true);
+		
+		/*  setBak(); //调用背景方法
+		    Container c1 = getContentPane();//获取JFrame面板
+		    panelWelcomeIn.setOpaque(false); *///把JPanel设置为透明 这样就不会遮住后面的背景 这样你就能在JPanel随意加组件了
+		//    c1.add(panel_1);
+
+		    
+		    JTabbedPane tabPanelInfo = new JTabbedPane(JTabbedPane.TOP);
+		    tabPanelInfo.setBounds(0, 26, 513, 482);
+		    panelInfo.add(tabPanelInfo);
+		    
+		    JPanel panelInfoIn = new JPanel();
+		    tabPanelInfo.addTab("Status information", null, panelInfoIn, null);
+		    panelInfoIn.setLayout(null);
+		    panelInfoIn.setBackground(UIManager.getColor("menu"));
+		 //   panel_4.setOpaque(false); //把JPanel设置为透明 这样就不会遮住后面的背景 这样你就能在JPanel随意加组件了
+		    
+		    JLabel label_9 = new JLabel("\u5B66\u53F7");
+		    label_9.setBounds(26, 41, 58, 15);
+		    panelInfoIn.add(label_9);
+		    
+		    JLabel label_10 = new JLabel("\u59D3\u540D");
+		    label_10.setBounds(26, 102, 58, 15);
+		    panelInfoIn.add(label_10);
+		    
+		    JLabel label_11 = new JLabel("\u5E74\u9F84");
+		    label_11.setBounds(26, 168, 58, 15);
+		    panelInfoIn.add(label_11);
+		    
+		    JLabel label_15 = new JLabel("\u6027\u522B");
+		    label_15.setBounds(26, 244, 58, 15);
+		    panelInfoIn.add(label_15);
+		    
+		    JLabel label_16 = new JLabel("\u51FA\u751F\u65E5\u671F");
+		    label_16.setBounds(26, 323, 58, 15);
+		    panelInfoIn.add(label_16);
+		    
+		    JLabel label_17 = new JLabel("\u7C4D\u8D2F");
+		    label_17.setBounds(26, 397, 58, 15);
+		    panelInfoIn.add(label_17);
+		    
+		    JLabel label_18 = new JLabel("\u5B66\u9662");
+		    label_18.setBounds(286, 323, 58, 15);
+		    panelInfoIn.add(label_18);
+		    
+		    JLabel label_19 = new JLabel("\u5BBF\u820D");
+		    label_19.setBounds(286, 397, 58, 15);
+		    panelInfoIn.add(label_19);
+		    
+		    textUsername = new JTextField();
+		    textUsername.setBounds(94, 38, 99, 21);
+		    panelInfoIn.add(textUsername);
+		    textUsername.setColumns(10);
+		    
+		    textName = new JTextField();
+		    textName.setColumns(10);
+		    textName.setBounds(94, 99, 99, 21);
+		    panelInfoIn.add(textName);
+		    
+		    textAge = new JTextField();
+		    textAge.setColumns(10);
+		    textAge.setBounds(94, 165, 99, 21);
+		    panelInfoIn.add(textAge);
+		    
+		    textGender = new JTextField();
+		    textGender.setColumns(10);
+		    textGender.setBounds(94, 241, 99, 21);
+		    panelInfoIn.add(textGender);
+		    
+		    textBirthday = new JTextField();
+		    textBirthday.setColumns(10);
+		    textBirthday.setBounds(94, 320, 99, 21);
+		    panelInfoIn.add(textBirthday);
+		    
+		    textCity = new JTextField();
+		    textCity.setColumns(10);
+		    textCity.setBounds(94, 394, 99, 21);
+		    panelInfoIn.add(textCity);
+		    
+		    textSchool = new JTextField();
+		    textSchool.setColumns(10);
+		    textSchool.setBounds(368, 320, 99, 21);
+		    panelInfoIn.add(textSchool);
+		    
+		    textLoc = new JTextField();
+		    textLoc.setColumns(10);
+		    textLoc.setBounds(368, 394, 99, 21);
+		    panelInfoIn.add(textLoc);
+		    
+		    JLabel label = new JLabel("STUDENT MANAGEMENT");
+		    label.setBounds(182, 0, 222, 15);
+		    panelInfo.add(label);
+		    label.setBackground(new Color(30, 144, 255));
+		   
+		 //   setSize(800, 600);
+		   // setVisible(true);
+		
+	}
+
+
+	public JLabel getLabelMoney() {
+		return labelMoney;
+	}
+
+	public void setLabelMoney(JLabel labelMoney) {
+		this.labelMoney = labelMoney;
+	}
+
+	/*	@SuppressWarnings("deprecation")
+		public void setBak(){
+		    ((JPanel)this.getContentPane()).setOpaque(false);
+		    ImageIcon img = new ImageIcon("d://seu.jpg"); //添加图片
+		    JLabel background = new JLabel(img); 
+		    this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+		    background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
+		}
+*/
+	public static void main(String[] args) {
+		new HomeView();
+	
 	}
 }

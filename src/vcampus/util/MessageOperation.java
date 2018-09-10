@@ -28,7 +28,9 @@ public class MessageOperation {
 			out.flush();
 			client.shutdownOutput();
 			
-			
+			if(socketMessage.getType().equals(SocketMessage.TYPE.LOGOUT)) {
+				return null;
+			}
 			in = new ObjectInputStream(client.getInputStream());
 			socketMessageReceived = (SocketMessage) in.readObject();
 			//close resources

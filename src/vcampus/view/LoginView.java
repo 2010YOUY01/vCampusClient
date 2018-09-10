@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Font;
 
 public class LoginView extends JFrame{
 
@@ -31,34 +33,43 @@ public class LoginView extends JFrame{
 	/**
 	 * Launch the application.
 	 */
-	
-
+	public static void main(String[] args) {
+		LoginView login = new LoginView(new User());
+		login.setVisible(true);
+	}
 	/**
 	 * Create the frame.
 	 */
+	
 	public LoginView(User user) {
 		this.user = user;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 402, 401);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblUsername = new JLabel("\u5B66\u53F7");
-		lblUsername.setBounds(14, 72, 72, 18);
+		JLabel lblUsername = new JLabel("");
+		lblUsername.setIcon(new ImageIcon(LoginView.class.getResource("/material/user.png")));
+		lblUsername.setBounds(38, 141, 48, 48);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("\u5BC6\u7801");
-		lblPassword.setBounds(14, 118, 72, 18);
+		JLabel lblPassword = new JLabel("");
+		lblPassword.setIcon(new ImageIcon(LoginView.class.getResource("/material/password (1).png")));
+		lblPassword.setBounds(38, 202, 48, 48);
 		contentPane.add(lblPassword);
 		
 		usernameField = new JTextField();
-		usernameField.setBounds(103, 69, 243, 24);
+		usernameField.setForeground(new Color(153,181,242));
+		usernameField.setFont(new Font("Eras Light ITC", Font.PLAIN, 24));
+		usernameField.setBounds(100, 141, 230, 36);
 		contentPane.add(usernameField);
 		usernameField.setColumns(10);
 		
-		JButton btnLogin = new JButton("\u767B\u9646");
+		JButton btnLogin = new JButton("");
+		btnLogin.setIcon(new ImageIcon(LoginView.class.getResource("/material/\u767B\u9646\u6309\u94AE.png")));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
@@ -70,11 +81,13 @@ public class LoginView extends JFrame{
 		
 			}
 		});
-		btnLogin.setBounds(103, 181, 113, 27);
+		btnLogin.setBounds(201, 271, 145, 48);
 		contentPane.add(btnLogin);
 		
-		JButton button = new JButton("\u6CE8\u518C");
-		button.addActionListener(new ActionListener() {
+		JButton btnCreatAccount = new JButton("creat account");
+		btnCreatAccount.setForeground(new Color(104,146,237));
+		btnCreatAccount.setFont(new Font("Eras Light ITC", Font.PLAIN, 20));
+		btnCreatAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterView registerView = new RegisterView();
 				RegisterController registerController = 
@@ -84,12 +97,21 @@ public class LoginView extends JFrame{
 				registerView.setVisible(true);
 			}
 		});
-		button.setBounds(240, 181, 113, 27);
-		contentPane.add(button);
+		btnCreatAccount.setBounds(41, 292, 133, 27);
+		btnCreatAccount.setBorder(null);
+		btnCreatAccount.setBackground(null);
+		contentPane.add(btnCreatAccount);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(100, 114, 246, 27);
+		passwordField.setForeground(new Color(153,181,242));
+		passwordField.setFont(new Font("Eras Light ITC", Font.PLAIN, 24));
+		passwordField.setBounds(100, 204, 230, 36);
 		contentPane.add(passwordField);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(LoginView.class.getResource("/material/\u767B\u9646\u5E95.png")));
+		lblNewLabel.setBounds(0, 0, 384, 114);
+		contentPane.add(lblNewLabel);
 		
 		setVisible(true);
 	}
